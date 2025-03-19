@@ -1,6 +1,6 @@
 import Joi from "joi";
-import ILOVItem from "./LOVs";
-import { fieldTypesEnum, textFieldTypesEnum } from "../../../../src/store/CommonEnums";
+import { fieldTypesEnum, textFieldTypesEnum } from "../../store/CommonEnums";
+import ILOVItem from "./ILOVItem";
 
 export interface IDynamicFormStep {
     step: number;

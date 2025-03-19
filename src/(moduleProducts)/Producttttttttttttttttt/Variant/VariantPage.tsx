@@ -14,7 +14,7 @@ import { SnackbarSeverityEnum } from "../../../../../src/store/CommonEnums";
 import Variants from "../../../../Services/interfaces/Product/Variants";
 import { InitialStateVariant } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
 import ILOVItem from "../../../../Services/interfaces/Common/LOVs";
-import ProductApiModule2 from "../../../../Services/API/Product/ProductApiModule2";
+import ProductApiModule from "../../../services/Product/ProductApiModule";
 
 
 
@@ -36,8 +36,9 @@ const VariantPage = () => {
     const [isResetting, setIsResetting] = useState(false);
     const [SearchFormData, setSearchFormData] = useState<Variants>(InitialStateVariant);
     // const { ProductApi, VariantApi } = useProductApiModule();
-    const ProductApi = useMemo(() => ProductApiModule2.ProductApi(), []);
-    const VariantApi = useMemo(() => ProductApiModule2.VariantApi(), []);
+    const ProductApi = useMemo(() => ProductApiModule.ProductApi(), []);
+    const VariantApi = useMemo(() => ProductApiModule.VariantApi(), []);
+
 
     const [productLovData, setProductLovData] = useState<ILOVItem[]>([]);
     const handleProductApi = useCallback(async (): Promise<ILOVItem[]> => {

@@ -6,7 +6,7 @@ import LOVs from "../../../CommonComponent/LOV";
 import ILOVItem from "../../../../Services/interfaces/Common/LOVs";
 import useProductApiModule from "../../../../Services/API/Product/ProductApiModule";
 import ProductApiModule from "../../../../Services/API/Product/ProductApiModule";
-import ProductApiModule2 from "../../../../Services/API/Product/ProductApiModule2";
+import ProductApiModule from "../../../../Services/API/Product/ProductApiModule";
 
 
 interface VariantSearchFormProps {
@@ -18,7 +18,7 @@ interface VariantSearchFormProps {
 const VariantSearchForm: React.FC<VariantSearchFormProps> = ({ onSubmit, onReset, actions }) => {
     const [formData, setFormData] = useState<Variant>(InitialStateVariant);
     // const { ProductApi } = useProductApiModule();
-    const ProductApi = useMemo(() => ProductApiModule2.ProductApi(), []);
+    const ProductApi = useMemo(() => ProductApiModule.ProductApi(), []);
 
     const [productLovData, setProductLovData] = useState<ILOVItem[]>([]);
 

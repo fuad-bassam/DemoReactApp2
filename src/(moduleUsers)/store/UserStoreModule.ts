@@ -1,4 +1,3 @@
-import { ILoginUser, IRegistrationUser, IUser } from "../../../src3/Services/interfaces/User/IUser";
 
 export const InitialStateUser: IUser = {
     name: "",
