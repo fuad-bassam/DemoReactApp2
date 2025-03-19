@@ -1,0 +1,199 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "hashed_password",
+      "role": "admin"
+    },
+    {
+      "id": "b862",
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "password": "hashed_password",
+      "role": "user"
+    },
+    {
+      "id": "2",
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "password": "hashed_password",
+      "role": "user"
+    },
+    {
+      "id": "2",
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "password": "hashed_password",
+      "role": "user"
+    },
+    {
+      "name": "dddddd",
+      "email": "john3@example.com",
+      "password": "register",
+      "id": "E4qRAZ0"
+    },
+    {
+      "name": "tt6",
+      "email": "john3@example.com",
+      "password": "register",
+      "id": "qn_RFZI"
+    }
+  ],
+  "products": [
+    {
+      "name": "a1",
+      "price": 3,
+      "stock": 2,
+      "categoryId": "1",
+      "description": "fdsfgd",
+      "isActive": true,
+      "createdAt": "2025-03-10T08:35:28.683Z",
+      "id": "9f97"
+    },
+    {
+      "name": "bbbbbbbbbb",
+      "categoryId": "1",
+      "description": "bbbbbbbbb",
+      "Notes": "bbbbbbb",
+      "createdAt": "2025-03-12T05:18:37.024Z",
+      "id": "xE4gLNI"
+    },
+    {
+      "name": "vvvvvvvvvvv",
+      "categoryId": "1",
+      "description": "vvvvvvvvvvv",
+      "Notes": "vvvvvvvvvvv",
+      "createdAt": "2025-03-12T05:18:45.754Z",
+      "id": "mU2Bi0-"
+    },
+    {
+      "name": "cccccccccccc",
+      "categoryId": "1",
+      "description": "cccccccccc",
+      "Notes": "ccccccc",
+      "createdAt": "2025-03-12T05:19:02.153Z",
+      "id": "FRnZ5vj"
+    },
+    {
+      "name": "xxxxxxxxx",
+      "categoryId": "1",
+      "description": "xxx",
+      "Notes": "xxx",
+      "createdAt": "2025-03-12T05:19:52.122Z",
+      "id": "J9E2eP2"
+    },
+    {
+      "name": "w",
+      "categoryId": "1",
+      "description": "ww",
+      "Notes": "www",
+      "createdAt": "2025-03-12T05:20:07.781Z",
+      "id": "YJXY0tU"
+    },
+    {
+      "name": "eeed",
+      "categoryId": "1",
+      "description": "eeedd",
+      "Notes": "eeedddd",
+      "createdAt": "2025-03-12T05:20:16.513Z",
+      "id": "lmYXsgx"
+    },
+    {
+      "name": "dddd",
+      "categoryId": "1",
+      "description": "",
+      "Notes": "",
+      "createdAt": "",
+      "id": "aBn-lkF"
+    },
+    {
+      "name": "ddd",
+      "categoryId": "1",
+      "description": "ddd",
+      "notes": "sdsdsd",
+      "createdAt": "",
+      "id": "qX3H_Xv"
+    },
+    {
+      "name": "a22",
+      "categoryId": "1",
+      "description": "aaaa",
+      "notes": "aaaa",
+      "createdAt": "",
+      "id": "Uiw6pVr"
+    },
+    {
+      "name": "fdsf",
+      "categoryId": "1",
+      "description": "fdsfds",
+      "notes": "fds",
+      "createdAt": "2025-03-12T05:20:16.513Z",
+      "id": "I-vvM1J"
+    },
+    {
+      "name": "ssss",
+      "categoryId": "6d77",
+      "description": "aaaa",
+      "notes": "h",
+      "createdAt": "",
+      "id": "nrJEl0D"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Category 1",
+      "description": "Description for category 1"
+    },
+    {
+      "name": "fdsafds",
+      "description": "fdsafdsa",
+      "id": "6d77"
+    },
+    {
+      "id": "7",
+      "name": "Category 7",
+      "description": "Description for category 7"
+    },
+    {
+      "name": "6666",
+      "description": "6666",
+      "id": "6d66"
+    },
+    {
+      "name": "Category 2",
+      "description": "fdsfgd",
+      "id": "sg1XfDG"
+    },
+    {
+      "name": "Category 3",
+      "description": "Category  3",
+      "id": "rLm4_KV"
+    }
+  ],
+  "variants": [
+    {
+      "name": "v1",
+      "productId": "9f97",
+      "price": "1",
+      "stock": "2",
+      "id": 1
+    },
+    {
+      "name": "v2",
+      "productId": "xE4gLNI",
+      "price": "1",
+      "stock": "3",
+      "id": 2
+    },
+    {
+      "name": "v3",
+      "productId": "xE4gLNI",
+      "price": "1",
+      "stock": "5",
+      "id": 3
+    }
+  ]
+}
