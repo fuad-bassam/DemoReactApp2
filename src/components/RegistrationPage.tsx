@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Box } from '@mui/material';
-import { useValidation } from '../../src3/hooks/useValidation';
-import { NavRoutesEnum } from '../../../Services/Common/NavRoutes';
-import { useAuth } from '../../src3/hooks/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import UserApiModule from '../../../Services/API/User/UserApiModule';
 import { InitialStateCreateUser, InitialStateCreateUserValidation } from '../(moduleUsers)/store/UserStoreModule';
-import { ILoginUser, IRegistrationUser, IUser } from '../../../Services/interfaces/User/IUser';
 import { UserRegistrationValidationSchema } from '../(moduleUsers)/store/UserValidation';
-import { useSnackbar } from '../../src3/hooks/SnackbarContext';
 import { SnackbarSeverityEnum } from '../store/CommonEnums';
+import { useAuth } from '../Context/AuthContext';
+import { useSnackbar } from '../Context/SnackbarContext';
+import { useValidation } from '../hooks/useValidation';
+import { IRegistrationUser, IUser, ILoginUser } from '../models/User/IUser';
+import { NavRoutesEnum } from '../routes/NavRoutes';
+import UserApiModule from '../services/User/UserApiModule';
 
 const RegistrationPage: React.FC = () => {
     const { setLoginUserInformation } = useAuth();

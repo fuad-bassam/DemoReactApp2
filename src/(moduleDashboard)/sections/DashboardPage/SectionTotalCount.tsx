@@ -1,7 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import StatCard from "../components/StatCard";
 
-export const SectionTotalCount: React.FC<{ isSmallScreen: boolean; totalProducts: number; totalVariants: number; totalStock: number }> = ({ isSmallScreen, totalProducts, totalVariants, totalStock }) => {
+export const SectionTotalCount: React.FC<{ totalProducts: number; totalVariants: number; totalStock: number }> = ({ totalProducts, totalVariants, totalStock }) => {
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <Box display={'flex'} gap={3} flexDirection={isSmallScreen ? 'column' : 'row'}>
             <StatCard title="Total Products" value={totalProducts} />

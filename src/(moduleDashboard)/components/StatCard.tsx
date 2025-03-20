@@ -7,6 +7,9 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ title, value }) => {
+
+    console.log("Stat");
+
     return (
         <Card sx={{ flex: 1 }}>
             <CardContent>

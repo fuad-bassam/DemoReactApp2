@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '../../Context/AuthContext';
 import Sidebar from './Sidebar';
 import { useLocation } from 'react-router-dom';
-import useAuthService from '../../Services/Common/AuthService';
+import useAuthService from '../../helpers/AuthService';
 
 const Header: React.FC = () => {
     const { loginUser } = useAuth();

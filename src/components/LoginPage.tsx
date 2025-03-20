@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
 import { LoginValidationSchema } from '../(moduleUsers)/store/UserValidation';
 import { InitialStateLoginUser } from '../(moduleUsers)/store/UserStoreModule';
-import { ObjectSchema } from 'joi';
 import useAuthService from '../helpers/AuthService';
 import { ILoginUser } from '../models/User/IUser';
 import { NavRoutesEnum } from '../routes/NavRoutes';
+import { useValidation } from '../hooks/useValidation';
+import { useAuth } from '../Context/AuthContext';
 
 const LoginPage: React.FC = () => {
     const { setLoginUserInformation } = useAuth();
@@ -85,11 +85,5 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
-function useAuth(): { setLoginUserInformation: any; } {
-    throw new Error('Function not implemented.');
-}
 
-function useValidation(LoginValidationSchema: ObjectSchema<any>, arg1: {}): { errors: any; validateField: any; validateForm: any; } {
-    throw new Error('Function not implemented.');
-}
 

@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-import Product from "../../../../Services/interfaces/Product/Product";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PaginatedTable from "../../../../hooks/PaginatedTable";
 import { TableColumnFormat } from "../../../../Services/interfaces/Common/TableColumnFormat";
 import { Button, Typography } from "@mui/material";
@@ -8,89 +7,76 @@ import { getJsonServerQueryBuild } from "../../../../Services/Common/getJsonServ
 import { useNavigate } from "react-router-dom";
 import { NavRoutesEnum } from "../../../../Services/Common/NavRoutes";
 import { removeCachedItemsByPrefix, setOrGetCache } from "../../../../Services/Common/CachingSessionService";
-import { InitialStateProduct } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
 import { usePaginationItem } from "../../../../hooks/usePagination";
-import ProductSearchForm from "./ProductSearchForm";
+import VariantSearchForm from "./sections/VariantPage/VariantSearchForm";
 import { useSnackbar } from "../../../../hooks/SnackbarContext";
 import { SnackbarSeverityEnum } from "../../../../../src/store/CommonEnums";
+import Variants from "../../../../Services/interfaces/Product/Variants";
+import { InitialStateVariant } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
 import ILOVItem from "../../../../Services/interfaces/Common/LOVs";
-import useProductApiModule from "../../../../Services/API/Product/ProductApiModule";
+import ProductApiModule from "../../../services/Product/ProductApiModule";
 
 
 
-const columns: TableColumnFormat<Product>[] = [
+const columns: TableColumnFormat<Variants>[] = [
     { id: "name", label: "Name" },
-    { id: "categoryId", label: "Category ID" },
-    { id: "description", label: "Description" },
-    { id: "notes", label: "Notes" },
-    {
-        id: "createdAt",
-        label: "Created At",
-        format: (value: string) => new Date(value).toLocaleDateString(),
-    },
+    { id: "productId", label: "Product" },
+    { id: "price", label: "Price" },
+    { id: "stock", label: "Stock" },
+
 ];
 
-const ProductPage = () => {
-    const { ProductApi, CategoryApi } = useProductApiModule();
-
-    const [data, setData] = useState<Product[]>([]);
+const VariantPage = () => {
+    const [data, setData] = useState<Variants[]>([]);
     const [totalCount, setTotalCount] = useState(0);
-
     const { openDialog } = useDialog();
     const navigate = useNavigate();
     const { showSnackbar } = useSnackbar();
     const { paginationInfo, handlePaginationChange } = usePaginationItem();
     const [isResetting, setIsResetting] = useState(false);
-    const [SearchFormData, setSearchFormData] = useState<Product>(InitialStateProduct);
+    const [SearchFormData, setSearchFormData] = useState<Variants>(InitialStateVariant);
+    // const { ProductApi, VariantApi } = useProductApiModule();
+    const ProductApi = useMemo(() => ProductApiModule.ProductApi(), []);
+    const VariantApi = useMemo(() => ProductApiModule.VariantApi(), []);
 
-    console.log("p")
 
-    const handleCategoryApi = useMemo(async () => {
-        try {
-            const Category = await CategoryApi.getAll();
-            return Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
-        } catch (error) {
-            console.error("Failed to fetch product options:", error);
-            return [];
-        }
-    }, [CategoryApi]);
+    const [productLovData, setProductLovData] = useState<ILOVItem[]>([]);
+    const handleProductApi = useCallback(async (): Promise<ILOVItem[]> => {
+        const categories = await ProductApi.getAll();
+        return categories.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
+    }, [ProductApi]);
 
-    // function getCategories(){
-    //     try {
-    //         const Category = await CategoryApi.getAll();
-    //         const mappedCategories = Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }))
-    //         SetState(categories, mappedCategories );
-    //         //return Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
-    //     } catch (error) {
-    //         console.error("Failed to fetch product options:", error);
-    //         return [];
-    //     }
-    // }
+    useEffect(() => {
+        const fetchProductOptions = async () => {
+            const options = await handleProductApi();
+            setProductLovData(options);
+        };
 
-    // function fetchItems(){
-    //     try {
-    //         const items = await CategoryApi.getAll();
-    //         return Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
-    //     } catch (error) {
-    //         console.error("Failed to fetch product options:", error);
-    //         return [];
-    //     }
-    // }
-
+        fetchProductOptions();
+    }, [handleProductApi]);
+    useEffect(() => {
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [paginationInfo, isResetting]);
+    console.log("v")
 
     const fetchData = async () => {
+        console.log("v1")
+
         const query = getJsonServerQueryBuild(paginationInfo, SearchFormData);
-        let _categoryLov = await handleCategoryApi;
-        console.log("p1")
-
         try {
-            const result: { data: Product[]; totalCount: number } = await setOrGetCache("Product/" + query, () => ProductApi.getByQuery(query));
+            const result: { data: Variants[]; totalCount: number } = await setOrGetCache("Variant/" + query, () => VariantApi.getByQuery(query));
+            result.data.map(itm => {
 
+                const product = productLovData.find(p => p.value === itm.productId);
+                itm.productId = product ? product.label : 'Unknown';
+                return itm;
+            });
             setData(result.data);
             setTotalCount(result.totalCount);
         } catch (error) {
             if (error instanceof Error) {
-                showSnackbar(`Error creating product: ${error.message}`, SnackbarSeverityEnum.Error);
+                showSnackbar(`Error creating Variant: ${error.message}`, SnackbarSeverityEnum.Error);
             } else {
                 showSnackbar('Unknown error occurred', SnackbarSeverityEnum.Error);
             }
@@ -100,20 +86,20 @@ const ProductPage = () => {
 
     const handleEdit = (id: string | undefined) => {
         if (id) {
-            navigate(`${NavRoutesEnum.ProductCreateUpdate.replace(':urlId?', id)}`);
+            navigate(`${NavRoutesEnum.VariantCreateUpdate.replace(':urlId?', id)}`);
         } else {
             showSnackbar('id is missing', SnackbarSeverityEnum.Error);
 
         }
     };
     const handleCreate = () => {
-        navigate(`${NavRoutesEnum.ProductCreateUpdate.replace(':urlId?', '')}`);
+        navigate(`${NavRoutesEnum.VariantCreateUpdate.replace(':urlId?', '')}`);
     };
     const handleDeleteClick = (id: string | undefined) => {
         if (id) {
             openDialog('Are you sure you want to delete this item?', () => {
-                ProductApi.deleteItem(id);
-                removeCachedItemsByPrefix("Product/");
+                VariantApi.deleteItem(id);
+                removeCachedItemsByPrefix("Variant/");
                 setIsResetting(!isResetting);
             });
         } else {
@@ -121,22 +107,19 @@ const ProductPage = () => {
         }
     };
 
-    const handleSearchFormData = (data: Product) => {
+    const handleSearchFormData = (data: Variants) => {
         setSearchFormData(data)
         setIsResetting(!isResetting);
 
     };
-    useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [paginationInfo, isResetting]);
+
 
     return (
         <div style={{ padding: 20 }}>
             <Typography variant="h4" gutterBottom>
-                Products </Typography>
+                Variants Page </Typography>
 
-            <ProductSearchForm
+            <VariantSearchForm
                 onSubmit={(formData) => handleSearchFormData(formData)}
                 onReset={(formData) => handleSearchFormData(formData)}
                 actions={
@@ -165,4 +148,4 @@ const ProductPage = () => {
         </div>
     );
 };
-export default ProductPage;
+export default VariantPage;

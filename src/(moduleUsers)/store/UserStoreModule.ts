@@ -1,3 +1,4 @@
+import { ILoginUser, IRegistrationUser, IUser } from "../../models/User/IUser";
 
 export const InitialStateUser: IUser = {
     name: "",

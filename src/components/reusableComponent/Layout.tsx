@@ -3,7 +3,7 @@ import { Outlet, Navigate } from "react-router-dom";
 import { Box, CssBaseline } from "@mui/material";
 import Header from "./Header";
 import { useAuth } from "../../Context/AuthContext";
-import { NavRoutesEnum } from "../../Services/Common/NavRoutes";
+import { NavRoutesEnum } from "../../routes/NavRoutes";
 
 const Layout: React.FC = () => {
     const { loginUser } = useAuth();

@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
-import ILOVItem from '../../Services/interfaces/Common/LOVs';
+import ILOVItem from '../../models/Common/ILOVItem';
 interface LOVProps {
     fieldName: string;
     label: string;

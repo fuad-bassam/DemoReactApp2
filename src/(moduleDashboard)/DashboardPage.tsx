@@ -1,28 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// pages/DashboardPage.tsx
 import React, { useEffect, useState } from 'react';
-import { Box, useTheme, useMediaQuery } from '@mui/material';
+import { Box, } from '@mui/material';
 import Category from '../models/Product/Category';
 import Product from '../models/Product/Product';
 import Variants from '../models/Product/Variants';
-import { SectionProductCharts } from './sections/SectionProductCharts';
-import { SectionTotalCount } from './sections/SectionTotalCount';
 
-
-
-
-
-
+import useProductApiModule from '../services/Product/useProductApiModule';
+import { SectionProductCharts } from './sections/DashboardPage/SectionProductCharts';
+import { SectionTotalCount } from './sections/DashboardPage/SectionTotalCount';
 
 const DashboardPage: React.FC = () => {
+    const { CategoryApi, ProductApi, VariantApi } = useProductApiModule();
     const [categories, setCategories] = useState<Category[]>([]);
     const [products, setProducts] = useState<Product[]>([]);
     const [variants, setVariants] = useState<Variants[]>([]);
-    const { ProductApi, VariantApi, CategoryApi } = useProductApiModule();
-
-
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
         const loadData = async () => {
@@ -37,14 +28,15 @@ const DashboardPage: React.FC = () => {
 
         loadData();
     }, []);
+    console.log("x");
 
     const totalProducts = products.length;
     const totalVariants = variants.length;
     const totalStock = variants.reduce((sum, variant) => sum + (Number(variant.stock) || 0), 0);
 
     return (
-        <Box display={'flex'} gap={3} flexDirection={isSmallScreen ? 'column' : 'row'} padding={3}>
-            <SectionTotalCount isSmallScreen={isSmallScreen} totalProducts={totalProducts} totalVariants={totalVariants} totalStock={totalStock}></SectionTotalCount>
+        <Box display={'flex'} gap={3} flexDirection={'column'} padding={3}>
+            <SectionTotalCount totalProducts={totalProducts} totalVariants={totalVariants} totalStock={totalStock}></SectionTotalCount>
             <SectionProductCharts categories={categories} products={products} variants={variants}></SectionProductCharts>
         </Box>
 

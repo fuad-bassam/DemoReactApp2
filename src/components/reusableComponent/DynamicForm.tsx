@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { TextField, Box, Slide, CircularProgress } from '@mui/material';
 import LOVs from './LOV';
 import { useValidation } from '../../hooks/useValidation';
-import { IDynamicFormFields } from '../../Services/interfaces/Common/IDynamicForm';
-import ILOVItem from '../../Services/interfaces/Common/LOVs';
+import { IDynamicFormFields } from '../../models/Common/IDynamicForm';
+import ILOVItem from '../../models/Common/ILOVItem';
+
 
 
 interface DynamicFormProps {

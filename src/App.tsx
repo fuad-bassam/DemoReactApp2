@@ -8,18 +8,22 @@ import { appTheme } from "../src/theme/appTheme";
 import { NavRoutes } from "./routes/NavRoutes";
 
 const App: React.FC = () => {
+
+  console.log("a");
+
   return (
     <AuthProvider>
-      <SnackbarProvider>
-        <DialogProvider>
+      {/* <SnackbarProvider>
+        <DialogProvider> */}
 
-          <ThemeProvider theme={appTheme}>
+      <ThemeProvider theme={appTheme}>
 
-            <RouterProvider router={NavRoutes} />
-          </ThemeProvider>
 
+        <RouterProvider router={NavRoutes} />
+      </ThemeProvider>
+      {/* 
         </DialogProvider>
-      </SnackbarProvider>
+      </SnackbarProvider> */}
     </AuthProvider>
   );
 };
