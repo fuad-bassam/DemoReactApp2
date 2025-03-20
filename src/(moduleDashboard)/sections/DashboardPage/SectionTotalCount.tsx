@@ -1,5 +1,5 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import StatCard from "../components/StatCard";
+import StatCard from "../../components/StatCard";
 
 export const SectionTotalCount: React.FC<{ totalProducts: number; totalVariants: number; totalStock: number }> = ({ totalProducts, totalVariants, totalStock }) => {
     const theme = useTheme();

@@ -1,20 +1,22 @@
+import { Typography, Button } from "@mui/material";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import PaginatedTable from "../../../../hooks/PaginatedTable";
-import { TableColumnFormat } from "../../../../Services/interfaces/Common/TableColumnFormat";
-import { Button, Typography } from "@mui/material";
-import { useDialog } from "../../../../hooks/DialogContext";
-import { getJsonServerQueryBuild } from "../../../../Services/Common/getJsonServerSearchQuery";
 import { useNavigate } from "react-router-dom";
-import { NavRoutesEnum } from "../../../../Services/Common/NavRoutes";
-import { removeCachedItemsByPrefix, setOrGetCache } from "../../../../Services/Common/CachingSessionService";
-import { usePaginationItem } from "../../../../hooks/usePagination";
+import { useDialog } from "../Context/DialogContext";
+import { useSnackbar } from "../Context/SnackbarContext";
+import { setOrGetCache, removeCachedItemsByPrefix } from "../helpers/CachingLocalStorageService";
+import { getJsonServerQueryBuild } from "../helpers/getJsonServerSearchQuery";
+import PaginatedTable from "../hooks/PaginatedTable";
+import { usePaginationItem } from "../hooks/usePagination";
+import ILOVItem from "../models/Common/ILOVItem";
+import { TableColumnFormat } from "../models/Common/TableColumnFormat";
+import Variants from "../models/Product/Variants";
+import { NavRoutesEnum } from "../routes/NavRoutes";
+import { SnackbarSeverityEnum } from "../store/CommonEnums";
 import VariantSearchForm from "./sections/VariantPage/VariantSearchForm";
-import { useSnackbar } from "../../../../hooks/SnackbarContext";
-import { SnackbarSeverityEnum } from "../../../../../src/store/CommonEnums";
-import Variants from "../../../../Services/interfaces/Product/Variants";
-import { InitialStateVariant } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
-import ILOVItem from "../../../../Services/interfaces/Common/LOVs";
-import ProductApiModule from "../../../services/Product/ProductApiModule";
+import { InitialStateVariant } from "./store/ProductStoreModule";
+import productApi from "../services/Product/productApi";
+import variantApi from "../services/Product/variantApi";
+
 
 
 
@@ -35,9 +37,9 @@ const VariantPage = () => {
     const { paginationInfo, handlePaginationChange } = usePaginationItem();
     const [isResetting, setIsResetting] = useState(false);
     const [SearchFormData, setSearchFormData] = useState<Variants>(InitialStateVariant);
-    // const { ProductApi, VariantApi } = useProductApiModule();
-    const ProductApi = useMemo(() => ProductApiModule.ProductApi(), []);
-    const VariantApi = useMemo(() => ProductApiModule.VariantApi(), []);
+    // const { , VariantApi } = useProductApiModule();
+    const ProductApi = useMemo(() => productApi(), []);
+    const VariantApi = useMemo(() => variantApi(), []);
 
 
     const [productLovData, setProductLovData] = useState<ILOVItem[]>([]);

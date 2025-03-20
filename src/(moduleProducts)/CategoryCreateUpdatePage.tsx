@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import StepperForm from '../../../CommonComponent/StepperForm';
-import { useSnackbar } from '../../../../hooks/SnackbarContext';
-import { fieldTypesEnum, SnackbarSeverityEnum } from '../../../../../src/store/CommonEnums';
-import { useNavigate, useParams } from 'react-router-dom';
-import DynamicForm from '../../../CommonComponent/DynamicForm';
-import { IDynamicFormStep } from '../../../../Services/interfaces/Common/IDynamicForm';
-import { NavRoutesEnum } from '../../../../Services/Common/NavRoutes';
-import { Button, Typography } from '@mui/material';
-import Category from '../../../../Services/interfaces/Product/Category';
-import { CategoryValidationSchemaFrom1, CategoryValidationSchemaFrom2 } from '../../../../Services/validation/Product/ProductValidation';
-import { InitialStateCategory, InitialStateCategoryFrom1Validation, InitialStateCategoryFrom2Validation } from '../../../../../src/(moduleProducts)/store/ProductStoreModule';
-import { removeCachedItemsByPrefix } from '../../../../Services/Common/CachingSessionService';
-import useProductApiModule from '../../../../Services/API/Product/ProductApiModule';
+import { Typography, Button } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import StepperForm from '../components/reusableComponent/StepperForm';
+import { useSnackbar } from '../Context/SnackbarContext';
+import { removeCachedItemsByPrefix } from '../helpers/CachingLocalStorageService';
+import { IDynamicFormStep } from '../models/Common/IDynamicForm';
+import Category from '../models/Product/Category';
+import { NavRoutesEnum } from '../routes/NavRoutes';
+import { SnackbarSeverityEnum, fieldTypesEnum } from '../store/CommonEnums';
+import { InitialStateCategory, InitialStateCategoryFrom1Validation, InitialStateCategoryFrom2Validation } from './store/ProductStoreModule';
+import { CategoryValidationSchemaFrom1, CategoryValidationSchemaFrom2 } from './store/ProductValidation';
+import DynamicForm from '../components/reusableComponent/DynamicForm';
+import categoryApi from '../services/Product/categoryApi';
+
 
 const CategoryCreateUpdatePage: React.FC = () => {
-    const { CategoryApi } = useProductApiModule();
+    const CategoryApi = useMemo(() => categoryApi(), []);
 
     const { urlId } = useParams();
     const { showSnackbar } = useSnackbar();
@@ -67,6 +68,7 @@ const CategoryCreateUpdatePage: React.FC = () => {
             };
             fetchCategory();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [urlId]);
 
 

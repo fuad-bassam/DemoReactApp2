@@ -1,16 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, } from '@mui/material';
 import Category from '../models/Product/Category';
 import Product from '../models/Product/Product';
 import Variants from '../models/Product/Variants';
 
-import useProductApiModule from '../services/Product/useProductApiModule';
 import { SectionProductCharts } from './sections/DashboardPage/SectionProductCharts';
 import { SectionTotalCount } from './sections/DashboardPage/SectionTotalCount';
+import categoryApi from '../services/Product/categoryApi';
+import productApi from '../services/Product/productApi';
+import variantApi from '../services/Product/variantApi';
 
 const DashboardPage: React.FC = () => {
-    const { CategoryApi, ProductApi, VariantApi } = useProductApiModule();
+    const ProductApi = useMemo(() => productApi(), []);
+    const VariantApi = useMemo(() => variantApi(), []);
+    const CategoryApi = useMemo(() => categoryApi(), []);
+
     const [categories, setCategories] = useState<Category[]>([]);
     const [products, setProducts] = useState<Product[]>([]);
     const [variants, setVariants] = useState<Variants[]>([]);

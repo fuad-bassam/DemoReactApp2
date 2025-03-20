@@ -1,6 +1,6 @@
 import axiosInstance from './axiosInstance';
 
-const useApiService = <T>(baseUrl: string) => {
+const apiService = <T>(baseUrl: string) => {
   const getList = async (query: string | null = null): Promise<{ data: T[]; totalCount: number }> => {
     try {
       const url = query ? `${baseUrl}${query}` : baseUrl;
@@ -67,4 +67,4 @@ const useApiService = <T>(baseUrl: string) => {
   return { getList, getItem, post, update, deleteItem };
 };
 
-export default useApiService;
+export default apiService;

@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import PaginatedTable from "../../../../hooks/PaginatedTable";
-import { TableColumnFormat } from "../../../../Services/interfaces/Common/TableColumnFormat";
-import { Button, Typography } from "@mui/material";
-import { useDialog } from "../../../../hooks/DialogContext";
-import { getJsonServerQueryBuild } from "../../../../Services/Common/getJsonServerSearchQuery";
+import { Typography, Button } from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { NavRoutesEnum } from "../../../../Services/Common/NavRoutes";
-import { removeCachedItemsByPrefix, setOrGetCache } from "../../../../Services/Common/CachingSessionService";
-import { usePaginationItem } from "../../../../hooks/usePagination";
+import { useDialog } from "../Context/DialogContext";
+import { useSnackbar } from "../Context/SnackbarContext";
+import { setOrGetCache, removeCachedItemsByPrefix } from "../helpers/CachingLocalStorageService";
+import { getJsonServerQueryBuild } from "../helpers/getJsonServerSearchQuery";
+import PaginatedTable from "../hooks/PaginatedTable";
+import { usePaginationItem } from "../hooks/usePagination";
+import { TableColumnFormat } from "../models/Common/TableColumnFormat";
+import Category from "../models/Product/Category";
+import { NavRoutesEnum } from "../routes/NavRoutes";
+import { SnackbarSeverityEnum } from "../store/CommonEnums";
 import CategorySearchForm from "./sections/CategoryPage/CategorySearchForm";
-import { useSnackbar } from "../../../../hooks/SnackbarContext";
-import { SnackbarSeverityEnum } from "../../../../../src/store/CommonEnums";
-import { InitialStateCategory } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
-import Category from "../../../../Services/interfaces/Product/Category";
-import useProductApiModule from "../../../../Services/API/Product/ProductApiModule";
+import { InitialStateCategory } from "./store/ProductStoreModule";
+import categoryApi from "../services/Product/categoryApi";
+
 
 
 
@@ -23,7 +24,7 @@ const columns: TableColumnFormat<Category>[] = [
 ];
 
 const CategoryPage = () => {
-    const { CategoryApi } = useProductApiModule();
+    const CategoryApi = useMemo(() => categoryApi(), []);
     const [data, setData] = useState<Category[]>([]);
     const [totalCount, setTotalCount] = useState(0);
     const { openDialog } = useDialog();

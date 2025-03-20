@@ -1,24 +1,23 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, TextField, useMediaQuery } from "@mui/material";
-import Variant from "../../../../Services/interfaces/Product/Variants";
-import { InitialStateVariant } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
-import LOVs from "../../../CommonComponent/LOV";
-import ILOVItem from "../../../../Services/interfaces/Common/LOVs";
-import useProductApiModule from "../../../../Services/API/Product/ProductApiModule";
-import ProductApiModule from "../../../../Services/API/Product/ProductApiModule";
-import ProductApiModule from "../../../../Services/API/Product/ProductApiModule";
+import LOVs from "../../../components/reusableComponent/LOV";
+import ILOVItem from "../../../models/Common/ILOVItem";
+import { InitialStateVariant } from "../../store/ProductStoreModule";
+import Variants from "../../../models/Product/Variants";
+import useProductApi from "../../../services/Product/productApi";
+
 
 
 interface VariantSearchFormProps {
-    onSubmit: (formData: Variant) => void;
-    onReset: (formData: Variant) => void;
+    onSubmit: (formData: Variants) => void;
+    onReset: (formData: Variants) => void;
     actions?: React.ReactNode;
 }
 
 const VariantSearchForm: React.FC<VariantSearchFormProps> = ({ onSubmit, onReset, actions }) => {
-    const [formData, setFormData] = useState<Variant>(InitialStateVariant);
+    const [formData, setFormData] = useState<Variants>(InitialStateVariant);
     // const { ProductApi } = useProductApiModule();
-    const ProductApi = useMemo(() => ProductApiModule.ProductApi(), []);
+    const ProductApi = useMemo(() => useProductApi, []);
 
     const [productLovData, setProductLovData] = useState<ILOVItem[]>([]);
 
@@ -27,7 +26,7 @@ const VariantSearchForm: React.FC<VariantSearchFormProps> = ({ onSubmit, onReset
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
     const handleProductApi = useCallback(async (): Promise<ILOVItem[]> => {
-        const categories = await ProductApi.getAll();
+        const categories = await ProductApi().getAll();
         return categories.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
     }, [ProductApi]);
 

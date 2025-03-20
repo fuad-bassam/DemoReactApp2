@@ -4,6 +4,12 @@ import HomePage from "../components/HomePage";
 import LoginPage from "../components/LoginPage";
 import RegistrationPage from "../components/RegistrationPage";
 import Layout from "../components/reusableComponent/Layout";
+import CategoryCreateUpdatePage from "../(moduleProducts)/CategoryCreateUpdatePage";
+import CategoryPage from "../(moduleProducts)/CategoryPage";
+import ProductCreateUpdatePage from "../(moduleProducts)/ProductCreateUpdatePage";
+import ProductPage from "../(moduleProducts)/ProductPage";
+import VariantCreateUpdatePage from "../(moduleProducts)/VariantCreateUpdatePage";
+import VariantPage from "../(moduleProducts)/VariantPage";
 
 
 export enum NavRoutesEnum {
@@ -34,12 +40,12 @@ export const NavRoutes = createBrowserRouter([
         children: [
             { path: NavRoutesEnum.Home, element: <HomePage /> },
             { path: NavRoutesEnum.Dashboard, element: <DashboardPage /> },
-            // { path: NavRoutesEnum.Products, element: <ProductPage /> },
-            // { path: NavRoutesEnum.ProductCreateUpdate, element: <ProductCreateUpdatePage /> },
-            // { path: NavRoutesEnum.Categories, element: <CategoryPage /> },
-            // { path: NavRoutesEnum.CategoryCreateUpdate, element: <CategoryCreateUpdatePage /> },
-            // { path: NavRoutesEnum.Variants, element: <VariantPage /> },
-            // { path: NavRoutesEnum.VariantCreateUpdate, element: <VariantCreateUpdatePage /> },
+            { path: NavRoutesEnum.Products, element: <ProductPage /> },
+            { path: NavRoutesEnum.ProductCreateUpdate, element: <ProductCreateUpdatePage /> },
+            { path: NavRoutesEnum.Categories, element: <CategoryPage /> },
+            { path: NavRoutesEnum.CategoryCreateUpdate, element: <CategoryCreateUpdatePage /> },
+            { path: NavRoutesEnum.Variants, element: <VariantPage /> },
+            { path: NavRoutesEnum.VariantCreateUpdate, element: <VariantCreateUpdatePage /> },
         ],
     },
     {

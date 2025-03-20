@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import StepperForm from '../../../CommonComponent/StepperForm';
-import { useSnackbar } from '../../../../hooks/SnackbarContext';
-import { fieldTypesEnum, SnackbarSeverityEnum } from '../../../../../src/store/CommonEnums';
-import { useNavigate, useParams } from 'react-router-dom';
-import { InitialStateProduct } from '../../../../../src/(moduleProducts)/store/ProductStoreModule';
-import { ProductValidationSchemaFrom1, ProductValidationSchemaFrom2 } from '../../../../Services/validation/Product/ProductValidation';
-import { InitialStateProductFrom1Validation, InitialStateProductFrom2Validation } from '../../../../../src/(moduleProducts)/store/ProductStoreModule';
-import { removeCachedItemsByPrefix, setOrGetCache as setOrGetCacheSession } from "../../../../Services/Common/CachingSessionService";
+import { Typography, Button } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import StepperForm from '../components/reusableComponent/StepperForm';
+import { useSnackbar } from '../Context/SnackbarContext';
+import { removeCachedItemsByPrefix } from '../helpers/CachingLocalStorageService';
+import { IDynamicFormStep } from '../models/Common/IDynamicForm';
+import ILOVItem from '../models/Common/ILOVItem';
+import Product from '../models/Product/Product';
+import { NavRoutesEnum } from '../routes/NavRoutes';
+import { SnackbarSeverityEnum, fieldTypesEnum } from '../store/CommonEnums';
+import { InitialStateProduct, InitialStateProductFrom1Validation, InitialStateProductFrom2Validation } from './store/ProductStoreModule';
+import { ProductValidationSchemaFrom1, ProductValidationSchemaFrom2 } from './store/ProductValidation';
+import { setOrGetCache as setOrGetCacheSession } from '../helpers/CachingSessionService';
+import DynamicForm from '../components/reusableComponent/DynamicForm';
+import categoryApi from '../services/Product/categoryApi';
+import productApi from '../services/Product/productApi';
 
-import ILOVItem from '../../../../Services/interfaces/Common/LOVs';
-import DynamicForm from '../../../CommonComponent/DynamicForm';
-import { IDynamicFormStep } from '../../../../Services/interfaces/Common/IDynamicForm';
-import Product from '../../../../Services/interfaces/Product/Product';
-import { NavRoutesEnum } from '../../../../Services/Common/NavRoutes';
-import { Button, Typography } from '@mui/material';
-import useProductApiModule from '../../../../Services/API/Product/ProductApiModule';
 
 const ProductCreateUpdatePage: React.FC = () => {
-    const { ProductApi, CategoryApi } = useProductApiModule();
-
+    const ProductApi = useMemo(() => productApi(), []);
+    const CategoryApi = useMemo(() => categoryApi(), []);
     const { urlId } = useParams();
     const { showSnackbar } = useSnackbar();
     const [newProduct, setNewProduct] = useState<Product>(InitialStateProduct);

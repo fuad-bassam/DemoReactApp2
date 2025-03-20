@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, TextField, useMediaQuery } from "@mui/material";
-import Category from "../../../../Services/interfaces/Product/Category";
-import { InitialStateCategory } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
+import Category from "../../../models/Product/Category";
+import { InitialStateCategory } from "../../store/ProductStoreModule";
+
 
 interface CategorySearchFormProps {
     onSubmit: (formData: Category) => void;

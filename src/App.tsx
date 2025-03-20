@@ -13,17 +13,13 @@ const App: React.FC = () => {
 
   return (
     <AuthProvider>
-      {/* <SnackbarProvider>
-        <DialogProvider> */}
-
-      <ThemeProvider theme={appTheme}>
-
-
-        <RouterProvider router={NavRoutes} />
-      </ThemeProvider>
-      {/* 
+      <SnackbarProvider>
+        <DialogProvider>
+          <ThemeProvider theme={appTheme}>
+            <RouterProvider router={NavRoutes} />
+          </ThemeProvider>
         </DialogProvider>
-      </SnackbarProvider> */}
+      </SnackbarProvider>
     </AuthProvider>
   );
 };

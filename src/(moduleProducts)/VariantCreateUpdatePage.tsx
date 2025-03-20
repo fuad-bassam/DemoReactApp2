@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import StepperForm from '../../../CommonComponent/StepperForm';
-import { useSnackbar } from '../../../../hooks/SnackbarContext';
-import { fieldTypesEnum, SnackbarSeverityEnum, textFieldTypesEnum } from '../../../../../src/store/CommonEnums';
-import { useNavigate, useParams } from 'react-router-dom';
-import { removeCachedItemsByPrefix, setOrGetCache as setOrGetCacheSession } from "../../../../Services/Common/CachingSessionService";
-import ILOVItem from '../../../../Services/interfaces/Common/LOVs';
-import DynamicForm from '../../../CommonComponent/DynamicForm';
-import { IDynamicFormStep } from '../../../../Services/interfaces/Common/IDynamicForm';
-import { NavRoutesEnum } from '../../../../Services/Common/NavRoutes';
-import { Button, Typography } from '@mui/material';
-import Variants from '../../../../Services/interfaces/Product/Variants';
-import { InitialStateVariant, InitialStateVariantFrom1Validation, InitialStateVariantFrom2Validation } from '../../../../../src/(moduleProducts)/store/ProductStoreModule';
-import { VariantValidationSchemaFrom1, VariantValidationSchemaFrom2 } from '../../../../Services/validation/Product/ProductValidation';
-import useProductApiModule from '../../../../Services/API/Product/ProductApiModule';
+import React, { useEffect, useMemo, useState } from 'react';
+
+import DynamicForm from '../components/reusableComponent/DynamicForm';
+import { Typography, Button } from '@mui/material';
+import { useParams, useNavigate } from 'react-router-dom';
+import StepperForm from '../components/reusableComponent/StepperForm';
+import { useSnackbar } from '../Context/SnackbarContext';
+import { removeCachedItemsByPrefix } from '../helpers/CachingLocalStorageService';
+import { IDynamicFormStep } from '../models/Common/IDynamicForm';
+import ILOVItem from '../models/Common/ILOVItem';
+import Variants from '../models/Product/Variants';
+import { NavRoutesEnum } from '../routes/NavRoutes';
+import { SnackbarSeverityEnum, fieldTypesEnum, textFieldTypesEnum } from '../store/CommonEnums';
+import { InitialStateVariant, InitialStateVariantFrom1Validation, InitialStateVariantFrom2Validation } from './store/ProductStoreModule';
+import { VariantValidationSchemaFrom1, VariantValidationSchemaFrom2 } from './store/ProductValidation';
+import { setOrGetCache as setOrGetCacheSession } from '../helpers/CachingSessionService';
+import productApi from '../services/Product/productApi';
+import variantApi from '../services/Product/variantApi';
 
 const VariantCreateUpdatePage: React.FC = () => {
-    const { ProductApi, VariantApi } = useProductApiModule();
+    const ProductApi = useMemo(() => productApi(), []);
+    const VariantApi = useMemo(() => variantApi(), []);
 
     const { urlId } = useParams();
     const { showSnackbar } = useSnackbar();

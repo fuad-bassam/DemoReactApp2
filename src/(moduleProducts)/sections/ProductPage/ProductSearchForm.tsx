@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, TextField, useMediaQuery } from "@mui/material";
-import { InitialStateProduct } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
-import Product from "../../../../Services/interfaces/Product/Product";
+import Product from "../../../models/Product/Product";
+import { InitialStateProduct } from "../../store/ProductStoreModule";
+
 
 interface ProductSearchFormProps {
     onSubmit: (formData: Product) => void;

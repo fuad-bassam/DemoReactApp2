@@ -1,20 +1,21 @@
-import React, { useEffect, useMemo, useState } from "react";
-import Product from "../../../../Services/interfaces/Product/Product";
-import PaginatedTable from "../../../../hooks/PaginatedTable";
-import { TableColumnFormat } from "../../../../Services/interfaces/Common/TableColumnFormat";
-import { Button, Typography } from "@mui/material";
-import { useDialog } from "../../../../hooks/DialogContext";
-import { getJsonServerQueryBuild } from "../../../../Services/Common/getJsonServerSearchQuery";
+import { useEffect, useMemo, useState } from "react";
+import { TableColumnFormat } from "../models/Common/TableColumnFormat";
+import Product from "../models/Product/Product";
+import { Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { NavRoutesEnum } from "../../../../Services/Common/NavRoutes";
-import { removeCachedItemsByPrefix, setOrGetCache } from "../../../../Services/Common/CachingSessionService";
-import { InitialStateProduct } from "../../../../../src/(moduleProducts)/store/ProductStoreModule";
-import { usePaginationItem } from "../../../../hooks/usePagination";
+import { useDialog } from "../Context/DialogContext";
+import { useSnackbar } from "../Context/SnackbarContext";
+import { setOrGetCache, removeCachedItemsByPrefix } from "../helpers/CachingLocalStorageService";
+import { getJsonServerQueryBuild } from "../helpers/getJsonServerSearchQuery";
+import PaginatedTable from "../hooks/PaginatedTable";
+import { usePaginationItem } from "../hooks/usePagination";
+import { NavRoutesEnum } from "../routes/NavRoutes";
+import { SnackbarSeverityEnum } from "../store/CommonEnums";
 import ProductSearchForm from "./sections/ProductPage/ProductSearchForm";
-import { useSnackbar } from "../../../../hooks/SnackbarContext";
-import { SnackbarSeverityEnum } from "../../../../../src/store/CommonEnums";
-import ILOVItem from "../../../../Services/interfaces/Common/LOVs";
-import useProductApiModule from "../../../../Services/API/Product/ProductApiModule";
+import { InitialStateProduct } from "./store/ProductStoreModule";
+import categoryApi from "../services/Product/categoryApi";
+import productApi from "../services/Product/productApi";
+
 
 
 
@@ -31,7 +32,8 @@ const columns: TableColumnFormat<Product>[] = [
 ];
 
 const ProductPage = () => {
-    const { ProductApi, CategoryApi } = useProductApiModule();
+    const ProductApi = useMemo(() => productApi(), []);
+    const CategoryApi = useMemo(() => categoryApi(), []);
 
     const [data, setData] = useState<Product[]>([]);
     const [totalCount, setTotalCount] = useState(0);
@@ -43,17 +45,16 @@ const ProductPage = () => {
     const [isResetting, setIsResetting] = useState(false);
     const [SearchFormData, setSearchFormData] = useState<Product>(InitialStateProduct);
 
-    console.log("p")
 
-    const handleCategoryApi = useMemo(async () => {
-        try {
-            const Category = await CategoryApi.getAll();
-            return Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
-        } catch (error) {
-            console.error("Failed to fetch product options:", error);
-            return [];
-        }
-    }, [CategoryApi]);
+    // const handleCategoryApi = useMemo(async () => {
+    //     try {
+    //         const Category = await CategoryApi.getAll();
+    //         return Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
+    //     } catch (error) {
+    //         console.error("Failed to fetch product options:", error);
+    //         return [];
+    //     }
+    // }, [CategoryApi]);
 
     // function getCategories(){
     //     try {
@@ -80,7 +81,7 @@ const ProductPage = () => {
 
     const fetchData = async () => {
         const query = getJsonServerQueryBuild(paginationInfo, SearchFormData);
-        let _categoryLov = await handleCategoryApi;
+        // let _categoryLov = await handleCategoryApi;
         console.log("p1")
 
         try {
