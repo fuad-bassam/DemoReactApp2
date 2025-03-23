@@ -8,9 +8,6 @@ import { appTheme } from "../src/theme/appTheme";
 import { NavRoutes } from "./routes/NavRoutes";
 
 const App: React.FC = () => {
-
-  console.log("a");
-
   return (
     <AuthProvider>
       <SnackbarProvider>

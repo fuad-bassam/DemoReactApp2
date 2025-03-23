@@ -4,7 +4,6 @@ const productApiModule = () => {
   // const categoryApi = categoryApi();
   // const productApi = productApi();
   // const variantApi = variantApi();
-  console.log("kkkkkkkkkkkkkkkkkkkk")
 
   return {
     // CategoryApi: categoryApi,

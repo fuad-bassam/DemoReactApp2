@@ -60,11 +60,7 @@ const VariantPage = () => {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [paginationInfo, isResetting]);
-    console.log("v")
-
     const fetchData = async () => {
-        console.log("v1")
-
         const query = getJsonServerQueryBuild(paginationInfo, SearchFormData);
         try {
             const result: { data: Variants[]; totalCount: number } = await setOrGetCache("Variant/" + query, () => VariantApi.getByQuery(query));
@@ -85,7 +81,6 @@ const VariantPage = () => {
             throw error;
         }
     };
-
     const handleEdit = (id: string | undefined) => {
         if (id) {
             navigate(`${NavRoutesEnum.VariantCreateUpdate.replace(':urlId?', id)}`);
@@ -108,14 +103,11 @@ const VariantPage = () => {
             showSnackbar('id is missing', SnackbarSeverityEnum.Error);
         }
     };
-
     const handleSearchFormData = (data: Variants) => {
         setSearchFormData(data)
         setIsResetting(!isResetting);
 
     };
-
-
     return (
         <div style={{ padding: 20 }}>
             <Typography variant="h4" gutterBottom>

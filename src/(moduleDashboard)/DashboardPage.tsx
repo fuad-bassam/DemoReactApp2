@@ -33,7 +33,6 @@ const DashboardPage: React.FC = () => {
 
         loadData();
     }, []);
-    console.log("x");
 
     const totalProducts = products.length;
     const totalVariants = variants.length;

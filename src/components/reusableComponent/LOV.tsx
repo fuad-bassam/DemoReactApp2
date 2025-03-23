@@ -17,7 +17,6 @@ const LOVs: React.FC<LOVProps> = ({ fieldName, label, data, value, onChange, dis
         onChange(fieldName, selectedValue);
     };
 
-    // console.log("lov");
 
     return (
         <FormControl fullWidth variant="outlined" margin="normal">

@@ -52,7 +52,6 @@ const VariantSearchForm: React.FC<VariantSearchFormProps> = ({ onSubmit, onReset
     const handleLOVsChange = (name: string, value: string) => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
-    console.log("ss")
 
     const isXs = useMediaQuery('(max-width:600px)');
 

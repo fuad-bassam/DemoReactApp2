@@ -15,6 +15,7 @@ import ProductSearchForm from "./sections/ProductPage/ProductSearchForm";
 import { InitialStateProduct } from "./store/ProductStoreModule";
 import categoryApi from "../services/Product/categoryApi";
 import productApi from "../services/Product/productApi";
+import ILOVItem from "../models/Common/ILOVItem";
 
 
 
@@ -37,6 +38,7 @@ const ProductPage = () => {
 
     const [data, setData] = useState<Product[]>([]);
     const [totalCount, setTotalCount] = useState(0);
+    const [categoryLov, setCategoryLov] = useState<ILOVItem[]>([]);
 
     const { openDialog } = useDialog();
     const navigate = useNavigate();
@@ -46,47 +48,53 @@ const ProductPage = () => {
     const [SearchFormData, setSearchFormData] = useState<Product>(InitialStateProduct);
 
 
-    // const handleCategoryApi = useMemo(async () => {
-    //     try {
-    //         const Category = await CategoryApi.getAll();
-    //         return Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
-    //     } catch (error) {
-    //         console.error("Failed to fetch product options:", error);
-    //         return [];
-    //     }
-    // }, [CategoryApi]);
+    console.log("products");
 
-    // function getCategories(){
-    //     try {
-    //         const Category = await CategoryApi.getAll();
-    //         const mappedCategories = Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }))
-    //         SetState(categories, mappedCategories );
-    //         //return Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
-    //     } catch (error) {
-    //         console.error("Failed to fetch product options:", error);
-    //         return [];
-    //     }
-    // }
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await CategoryApi.getAll();
+                const categoryOptions = response.data.map<ILOVItem>((cat: any) => ({
+                    value: cat.id,
+                    label: cat.name,
+                }));
+                setCategoryLov(categoryOptions);
+            } catch (error) {
+                console.error("Failed to fetch category options:", error);
+                setCategoryLov([]);
+            }
+        };
 
-    // function fetchItems(){
-    //     try {
-    //         const items = await CategoryApi.getAll();
-    //         return Category.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
-    //     } catch (error) {
-    //         console.error("Failed to fetch product options:", error);
-    //         return [];
-    //     }
-    // }
+        fetchCategories();
+    }, []);
 
+    useEffect(() => {
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [paginationInfo, isResetting]);
+    const fetchAndTransformProducts = async (query: string): Promise<{ data: Product[]; totalCount: number }> => {
+        try {
+            const response = await ProductApi.getByQuery(query);
 
+            // Transform categoryId to its label
+            response.data = response.data.map(itm => {
+                const product = categoryLov.find(p => p.value === itm.categoryId);
+                itm.categoryId = product ? product.label : "Unknown";
+                return itm;
+            });
+
+            return response;
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            return { data: [], totalCount: 0 }; // Fallback for errors
+        }
+    };
     const fetchData = async () => {
         const query = getJsonServerQueryBuild(paginationInfo, SearchFormData);
-        // let _categoryLov = await handleCategoryApi;
-        console.log("p1")
+        console.log("p2");
 
         try {
-            const result: { data: Product[]; totalCount: number } = await setOrGetCache("Product/" + query, () => ProductApi.getByQuery(query));
-
+            const result: { data: Product[]; totalCount: number } = await setOrGetCache("Product/" + query, () => fetchAndTransformProducts(query))
             setData(result.data);
             setTotalCount(result.totalCount);
         } catch (error) {
@@ -127,10 +135,6 @@ const ProductPage = () => {
         setIsResetting(!isResetting);
 
     };
-    useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [paginationInfo, isResetting]);
 
     return (
         <div style={{ padding: 20 }}>

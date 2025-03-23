@@ -33,11 +33,9 @@ const CategoryPage = () => {
     const { paginationInfo, handlePaginationChange } = usePaginationItem();
     const [isResetting, setIsResetting] = useState(false);
     const [SearchFormData, setSearchFormData] = useState<Category>(InitialStateCategory);
-    console.log("c")
 
     const fetchData = async () => {
         const query = getJsonServerQueryBuild(paginationInfo, SearchFormData);
-        console.log("c1")
 
         try {
             const result: { data: Category[]; totalCount: number } = await setOrGetCache("Category/" + query, () => CategoryApi.getByQuery(query));

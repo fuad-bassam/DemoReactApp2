@@ -9,7 +9,6 @@ interface ChartCardProps {
 
 const ChartCard: React.FC<ChartCardProps> = ({ title, option }) => {
     const chartRef = useRef<HTMLDivElement>(null);
-    console.log("c");
 
     useEffect(() => {
         if (chartRef.current) {
