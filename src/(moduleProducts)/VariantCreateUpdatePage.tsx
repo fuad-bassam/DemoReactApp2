@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-
 import DynamicForm from '../components/reusableComponent/DynamicForm';
-import { Typography, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import StepperForm from '../components/reusableComponent/StepperForm';
 import { useSnackbar } from '../Context/SnackbarContext';
@@ -137,10 +136,6 @@ const VariantCreateUpdatePage: React.FC = () => {
 
     return (
         <div>
-            <Typography variant="h4" gutterBottom>
-                {urlId ? "Variant Edit" : "Variant Creation"}
-            </Typography>
-
             <StepperForm
                 steps={['Step 1: Variant Info', 'Step 2: Variant values']}
                 onSubmit={async () => await handleCreateVariant(newVariant)}

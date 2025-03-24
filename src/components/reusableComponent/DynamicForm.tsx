@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TextField, Box, Slide, CircularProgress } from '@mui/material';
+import { TextField, Slide, CircularProgress, Grid2 } from '@mui/material';
 import LOVs from './LOV';
 import { useValidation } from '../../hooks/useValidation';
 import { IDynamicFormFields } from '../../models/Common/IDynamicForm';
@@ -72,17 +72,20 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
     return (
         <Slide in={true} direction="left" timeout={500}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400 }}>
-                {fields.map((field) => {
+            <Grid2 container spacing={2} >
+                {fields.map((field, index) => {
                     if (field.fieldType === 'dropdown') {
                         const options = dropdownOptions[field.name] || [];
                         const isLoading = loading[field.name];
 
                         return (
-                            <div key={field.name}>
+                            //<div key={field.name}>
+                            <Grid2 key={index} size={{ xs: 12, sm: 6 }}>
+
                                 {isLoading ? (
                                     <CircularProgress size={24} />
                                 ) : (
+
                                     <LOVs
                                         fieldName={field.name}
                                         label={field.label}
@@ -91,28 +94,36 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                         onChange={handleLOVsChange}
                                     />
                                 )}
-                            </div>
+                            </Grid2>
+                            // </Box>
+                            //</Slide></div>
                         );
                     } else {
                         return (
-                            <TextField
-                                key={field.name}
-                                label={field.label}
-                                name={field.name}
-                                value={data[field.name] || ''}
-                                onChange={handleChange}
-                                fullWidth
-                                type={field.textFieldType || 'text'}
-                                required={field.required}
-                                disabled={field.disabled}
-                                error={!!errors[field.name]}
-                                helperText={errors[field.name]}
-                            />
+                            <Grid2 key={index} size={{ xs: 12, sm: 6 }}>
+
+                                <TextField
+                                    key={field.name}
+                                    label={field.label}
+                                    name={field.name}
+                                    value={data[field.name] || ''}
+                                    onChange={handleChange}
+                                    fullWidth
+                                    margin="normal"
+                                    type={field.textFieldType || 'text'}
+                                    required={field.required}
+                                    disabled={field.disabled}
+                                    error={!!errors[field.name]}
+                                    helperText={errors[field.name]}
+                                />
+                            </Grid2>
                         );
                     }
+
                 })}
-            </Box>
-        </Slide>
+
+            </Grid2 >
+        </Slide >
     );
 };
 

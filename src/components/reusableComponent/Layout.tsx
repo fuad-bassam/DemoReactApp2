@@ -12,25 +12,25 @@ const Layout: React.FC = () => {
     }
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
+        // <Box sx={{ display: "flex", flexDirection: "row" }}>
+        //  {/* {false && <Sidebar />} */}
+        <Box display={"flex"} flexDirection={"column"} flexGrow={1} height={'100vh'}>
+
             <CssBaseline />
-            {/* {false && <Sidebar />} */}
-            <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+            <Header />
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    backgroundColor: "#f4f6f8",
+                    padding: 3,
 
-                <Header />
-                <Box
-                    component="main"
-                    sx={{
-                        flexGrow: 1,
-                        backgroundColor: "#f4f6f8",
-                        padding: 3,
-                    }}
-                >
-                    <Outlet />
-                </Box>
+                }}
+            >
+                <Outlet />
             </Box>
-
         </Box>
+        //</Box>
     );
 };
 

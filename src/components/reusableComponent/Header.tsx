@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, Box, IconButton, Button } from '@mui/mater
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '../../Context/AuthContext';
 import Sidebar from './Sidebar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useAuthService from '../../helpers/AuthService';
 
 const Header: React.FC = () => {
@@ -11,25 +11,25 @@ const Header: React.FC = () => {
     const { logout } = useAuthService();
     const [open, setOpen] = useState(false);
     const location = useLocation();
-
+    const { urlId } = useParams();
     const handleDrawerToggle = () => {
         setOpen(!open);
     };
     // Route-to-name mapping
-    const routeMap: { [key: string]: string } = {
-        '': 'Home',
-        'home': 'Home',
-        'dashboard': 'Dashboard',
-        'products': 'Products',
-        // 'product-create-update': 'product create update',
-        // 'category-create-update': 'Category create update',
-        // 'variant-create-update': 'variant create update',
-        'categories': 'Categories',
-        'variants': 'Variants',
+    const routeMap: { [key: string]: { name: string, showInSidebar?: boolean } } = {
+        '': { name: 'Home', },
+        'home': { name: 'Home', showInSidebar: false },
+        'dashboard': { name: 'Dashboard' },
+        'products': { name: 'Products' },
+        'product-create-update': { name: urlId ? 'Product Edit' : 'Product Creation', showInSidebar: false },
+        'category-create-update': { name: urlId ? 'Category Edit' : 'Category Creation', showInSidebar: false },
+        'variant-create-update': { name: urlId ? 'Variant Edit' : 'Variant Creation', showInSidebar: false },
+        'categories': { name: 'Categories' },
+        'variants': { name: 'Variants' },
     };
     const getPageName = () => {
         const path = location.pathname.replaceAll("/", "");
-        return routeMap[path] || 'Unknown Page';
+        return routeMap[path].name || 'Unknown Page';
     };
     const handleLogout = () => {
         logout();

@@ -1,6 +1,8 @@
 import { useAuth } from "../Context/AuthContext";
 import { ILoginUser } from "../models/User/IUser";
 import useAuthApi from "../services/Common/useAuthApi";
+import { clearCache as clearSessionCache } from "./CachingSessionService";
+import { clearCache as clearLocalStorageCache } from "./CachingLocalStorageService";
 
 
 const useAuthService = () => {
@@ -26,6 +28,8 @@ const useAuthService = () => {
   };
 
   const logout = () => {
+    clearSessionCache();
+    clearLocalStorageCache();
     setLoginUserInformation(null);
   };
 

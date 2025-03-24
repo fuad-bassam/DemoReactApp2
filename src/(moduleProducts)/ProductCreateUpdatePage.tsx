@@ -1,4 +1,4 @@
-import { Typography, Button } from '@mui/material';
+import { Button, Grid2 } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import StepperForm from '../components/reusableComponent/StepperForm';
@@ -131,10 +131,8 @@ const ProductCreateUpdatePage: React.FC = () => {
 
 
     return (
-        <div>
-            <Typography variant="h4" gutterBottom>
-                {urlId ? "Product Edit" : "Product Creation"}
-            </Typography>
+        <Grid2 >
+
 
             <StepperForm
                 steps={['Step 1: Product Info', 'Step 2: Product Note']}
@@ -158,7 +156,7 @@ const ProductCreateUpdatePage: React.FC = () => {
             <Button onClick={() => handleBack()} variant="outlined" color="primary" style={{ marginRight: 8 }}>
                 Back
             </Button>
-        </div>
+        </Grid2>
     );
 };
 

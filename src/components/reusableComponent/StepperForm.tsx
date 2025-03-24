@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, Box } from '@mui/material';
+import { Stepper, Step, StepLabel, Button, Card, CardActions, CardContent, CardHeader } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+
 
 interface StepperFormProps {
     steps: string[];
@@ -43,27 +45,34 @@ const StepperForm: React.FC<StepperFormProps> = ({ steps, onSubmit, saveOnStep, 
         onReset();
     };
     return (
-        <Box>
-            <Stepper activeStep={activeStep} alternativeLabel>
-                {steps.map((label, index) => (
-                    <Step key={index}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-            <Box>
-                {children[activeStep]}
-            </Box>
-            <Box>
-                <Button disabled={activeStep === 0} onClick={handleBack}>previous</Button>
+        <Grid container justifyContent="center" alignSelf={'center'} >
+            <Grid size={8}>
 
-                {activeStep === steps.length - 1 ? (
-                    <Button onClick={handleSubmit} disabled={!isStepValid}>Submit</Button>
-                ) : (
-                    <Button onClick={handleNext} disabled={!isStepValid}>Next</Button>
-                )}
-            </Box>
-        </Box>
+                <Stepper activeStep={activeStep} alternativeLabel>
+                    {steps.map((label, index) => (
+                        <Step key={index}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+                <Card   >
+                    <CardHeader title={steps[activeStep]}></CardHeader>
+
+                    <CardContent>
+                        {children[activeStep]}
+                    </CardContent>
+                    <CardActions sx={{ justifyContent: 'space-between', gap: 2, padding: 2 }}>
+                        <Button disabled={activeStep === 0} onClick={handleBack} variant='outlined'>previous</Button>
+                        {activeStep === steps.length - 1 ? (
+                            <Button onClick={handleSubmit} disabled={!isStepValid} variant='outlined'>Submit</Button>
+                        ) : (
+                            <Button onClick={handleNext} disabled={!isStepValid} variant='outlined'>Next</Button>
+                        )}
+                    </CardActions>
+                </Card>
+            </Grid>
+        </Grid>
+
     );
 };
 

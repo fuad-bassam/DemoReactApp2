@@ -1,4 +1,4 @@
-import { Typography, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import StepperForm from '../components/reusableComponent/StepperForm';
@@ -105,10 +105,6 @@ const CategoryCreateUpdatePage: React.FC = () => {
 
     return (
         <div>
-            <Typography variant="h4" gutterBottom>
-                {urlId ? "Category Edit" : "Category Creation"}
-            </Typography>
-
             <StepperForm
                 steps={['Step 1: Category Name', 'Step 2: Category description']}
                 onSubmit={async () => await handleCreateCategory(newCategory)}

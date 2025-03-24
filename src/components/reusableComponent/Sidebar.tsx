@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 interface SidebarProps {
     open: boolean;
     handleDrawerToggle: () => void;
-    routeMap: { [key: string]: string };
+    routeMap: { [key: string]: { name: string, showInSidebar?: boolean } };
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ open, handleDrawerToggle, routeMap }) => {
@@ -23,9 +23,11 @@ const Sidebar: React.FC<SidebarProps> = ({ open, handleDrawerToggle, routeMap })
             }}>
             <List>
                 {Object.keys(routeMap).map((path) => (
-                    <ListItemButton key={path} component={Link} to={path} onClick={handleDrawerToggle}>
-                        <ListItemText primary={routeMap[path]} />
-                    </ListItemButton>
+                    routeMap[path].showInSidebar !== false && (
+                        <ListItemButton key={path} component={Link} to={path} onClick={handleDrawerToggle}>
+                            <ListItemText primary={routeMap[path].name} />
+                        </ListItemButton>
+                    )
                 ))}
             </List>
             {/* <List>

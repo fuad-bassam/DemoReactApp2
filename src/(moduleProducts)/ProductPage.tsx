@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useMemo, useState } from "react";
 import { TableColumnFormat } from "../models/Common/TableColumnFormat";
 import Product from "../models/Product/Product";
@@ -48,17 +49,17 @@ const ProductPage = () => {
     const [SearchFormData, setSearchFormData] = useState<Product>(InitialStateProduct);
 
 
-    console.log("products");
+    console.log("p");
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await CategoryApi.getAll();
-                const categoryOptions = response.data.map<ILOVItem>((cat: any) => ({
+                const categoryData = response.data.map<ILOVItem>((cat: any) => ({
                     value: cat.id,
                     label: cat.name,
                 }));
-                setCategoryLov(categoryOptions);
+                setCategoryLov(categoryData);
             } catch (error) {
                 console.error("Failed to fetch category options:", error);
                 setCategoryLov([]);
@@ -66,17 +67,16 @@ const ProductPage = () => {
         };
 
         fetchCategories();
-    }, []);
+    }, [CategoryApi]);
 
     useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [paginationInfo, isResetting]);
+        if (categoryLov.length > 0) {
+            fetchData();
+        }
+    }, [paginationInfo, isResetting, categoryLov]);
     const fetchAndTransformProducts = async (query: string): Promise<{ data: Product[]; totalCount: number }> => {
         try {
             const response = await ProductApi.getByQuery(query);
-
-            // Transform categoryId to its label
             response.data = response.data.map(itm => {
                 const product = categoryLov.find(p => p.value === itm.categoryId);
                 itm.categoryId = product ? product.label : "Unknown";
@@ -91,7 +91,6 @@ const ProductPage = () => {
     };
     const fetchData = async () => {
         const query = getJsonServerQueryBuild(paginationInfo, SearchFormData);
-        console.log("p2");
 
         try {
             const result: { data: Product[]; totalCount: number } = await setOrGetCache("Product/" + query, () => fetchAndTransformProducts(query))
