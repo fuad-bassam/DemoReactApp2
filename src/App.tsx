@@ -10,13 +10,13 @@ import { NavRoutes } from "./routes/NavRoutes";
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <SnackbarProvider>
-        <DialogProvider>
-          <ThemeProvider theme={appTheme}>
+      <ThemeProvider theme={appTheme}>
+        <SnackbarProvider>
+          <DialogProvider>
             <RouterProvider router={NavRoutes} />
-          </ThemeProvider>
-        </DialogProvider>
-      </SnackbarProvider>
+          </DialogProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
     </AuthProvider>
   );
 };

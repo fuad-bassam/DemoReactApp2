@@ -48,8 +48,7 @@ const ProductPage = () => {
     const [isResetting, setIsResetting] = useState(false);
     const [SearchFormData, setSearchFormData] = useState<Product>(InitialStateProduct);
 
-
-    console.log("p");
+    console.log("p1222");
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -120,6 +119,7 @@ const ProductPage = () => {
     const handleDeleteClick = (id: string | undefined) => {
         if (id) {
             openDialog('Are you sure you want to delete this item?', () => {
+                debugger
                 ProductApi.deleteItem(id);
                 removeCachedItemsByPrefix("Product/");
                 setIsResetting(!isResetting);
@@ -137,9 +137,7 @@ const ProductPage = () => {
 
     return (
         <div style={{ padding: 20 }}>
-            <Typography variant="h4" gutterBottom>
-                Products </Typography>
-
+            <Typography variant="h4" gutterBottom>Products</Typography>
             <ProductSearchForm
                 onSubmit={(formData) => handleSearchFormData(formData)}
                 onReset={(formData) => handleSearchFormData(formData)}

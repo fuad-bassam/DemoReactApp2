@@ -28,8 +28,11 @@ const Header: React.FC = () => {
         'variants': { name: 'Variants' },
     };
     const getPageName = () => {
-        const path = location.pathname.replaceAll("/", "");
-        return routeMap[path].name || 'Unknown Page';
+        debugger
+        const pathSegments = location.pathname.split('/').filter(s => s !== '');
+        const basePath = pathSegments[0] || '';
+        return routeMap[basePath]?.name || 'Unknown Page';
+
     };
     const handleLogout = () => {
         logout();
@@ -56,7 +59,6 @@ const Header: React.FC = () => {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             {loginUser.name}
                         </Typography>
-
                     </Box>
 
                 )}

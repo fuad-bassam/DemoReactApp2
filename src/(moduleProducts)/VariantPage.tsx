@@ -42,7 +42,7 @@ const VariantPage = () => {
     const VariantApi = useMemo(() => variantApi(), []);
 
 
-    const [productLovData, setProductLovData] = useState<ILOVItem[]>([]);
+    const [productLov, setProductLovData] = useState<ILOVItem[]>([]);
     const handleProductApi = useCallback(async (): Promise<ILOVItem[]> => {
         const categories = await ProductApi.getAll();
         return categories.data.map<ILOVItem>((cat: any) => ({ value: cat.id, label: cat.name }));
@@ -57,19 +57,32 @@ const VariantPage = () => {
         fetchProductOptions();
     }, [handleProductApi]);
     useEffect(() => {
-        fetchData();
+        if (productLov.length > 0) {
+            fetchData();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [paginationInfo, isResetting]);
+    }, [paginationInfo, isResetting, productLov]);
+
+    const fetchAndTransformProducts = async (query: string): Promise<{ data: Variants[]; totalCount: number }> => {
+        try {
+            const response = await VariantApi.getByQuery(query);
+            response.data = response.data.map(itm => {
+                const product = productLov.find(p => p.value === itm.productId);
+                itm.productId = product ? product.label : "Unknown";
+                return itm;
+            });
+
+            return response;
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            return { data: [], totalCount: 0 };
+        }
+    };
+
     const fetchData = async () => {
         const query = getJsonServerQueryBuild(paginationInfo, SearchFormData);
         try {
-            const result: { data: Variants[]; totalCount: number } = await setOrGetCache("Variant/" + query, () => VariantApi.getByQuery(query));
-            result.data.map(itm => {
-
-                const product = productLovData.find(p => p.value === itm.productId);
-                itm.productId = product ? product.label : 'Unknown';
-                return itm;
-            });
+            const result: { data: Variants[]; totalCount: number } = await setOrGetCache("Variant/" + query, () => fetchAndTransformProducts(query));
             setData(result.data);
             setTotalCount(result.totalCount);
         } catch (error) {

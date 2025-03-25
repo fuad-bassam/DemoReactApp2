@@ -109,44 +109,20 @@
       "id": "aBn-lkF"
     },
     {
-      "name": "ddd",
-      "categoryId": "1",
-      "description": "ddd",
-      "notes": "sdsdsd",
-      "createdAt": "",
-      "id": "qX3H_Xv"
-    },
-    {
-      "name": "a22",
-      "categoryId": "1",
-      "description": "aaaa",
-      "notes": "aaaa",
-      "createdAt": "",
-      "id": "Uiw6pVr"
-    },
-    {
-      "name": "fdsf",
-      "categoryId": "1",
-      "description": "fdsfds",
-      "notes": "fds",
-      "createdAt": "2025-03-12T05:20:16.513Z",
-      "id": "I-vvM1J"
-    },
-    {
-      "name": "ssss",
-      "categoryId": "6d77",
-      "description": "aaaa",
-      "notes": "h",
-      "createdAt": "",
-      "id": "nrJEl0D"
-    },
-    {
       "name": "dddd",
       "categoryId": "1",
       "description": "sass",
       "notes": "",
       "createdAt": "",
       "id": "tPnNDO1"
+    },
+    {
+      "name": "fff",
+      "categoryId": "1",
+      "description": "ffhgfhg",
+      "notes": "fgfghgh",
+      "createdAt": "",
+      "id": "mIyz31W"
     }
   ],
   "categories": [
@@ -195,13 +171,6 @@
       "price": "1",
       "stock": "3",
       "id": 2
-    },
-    {
-      "name": "v3",
-      "productId": "xE4gLNI",
-      "price": "1",
-      "stock": "5",
-      "id": 3
     }
   ]
 }

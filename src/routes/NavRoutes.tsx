@@ -20,9 +20,9 @@ export enum NavRoutesEnum {
     Products = "/products",
     ProductCreateUpdate = "/product-create-update/:urlId?",
     Categories = "/categories",
-    CategoryCreateUpdate = "/category-create-update/:urlId?",
+    CategoryCreateUpdate = "/category-create-update/:urlId2?",
     Variants = "/variants",
-    VariantCreateUpdate = "/variant-create-update/:urlId?",
+    VariantCreateUpdate = "/variant-create-update/:urlName?",
 }
 
 export const NavRoutes = createBrowserRouter([

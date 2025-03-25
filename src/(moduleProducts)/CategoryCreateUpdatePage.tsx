@@ -105,6 +105,9 @@ const CategoryCreateUpdatePage: React.FC = () => {
 
     return (
         <div>
+            <Button onClick={() => handleBack()} variant="outlined" color="primary" style={{ marginRight: 8 }}>
+                Back
+            </Button>
             <StepperForm
                 steps={['Step 1: Category Name', 'Step 2: Category description']}
                 onSubmit={async () => await handleCreateCategory(newCategory)}
@@ -124,9 +127,7 @@ const CategoryCreateUpdatePage: React.FC = () => {
                     />
                 ))}
             </StepperForm>
-            <Button onClick={() => handleBack()} variant="outlined" color="primary" style={{ marginRight: 8 }}>
-                Back
-            </Button>
+
         </div>
     );
 };

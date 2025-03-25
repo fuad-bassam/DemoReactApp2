@@ -50,10 +50,10 @@ export const DialogProvider: React.FC<{ children: ReactNode }> = ({ children }) 
                     <p>{message}</p>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeDialog} color="primary">
+                    <Button onClick={closeDialog} color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={handleConfirm} color="secondary">
+                    <Button onClick={handleConfirm} color="primary">
                         Confirm
                     </Button>
                 </DialogActions>

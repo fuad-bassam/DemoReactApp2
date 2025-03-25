@@ -39,6 +39,14 @@ const VariantSearchForm: React.FC<VariantSearchFormProps> = ({ onSubmit, onReset
         fetchProductOptions();
     }, [handleProductApi]);
 
+    useEffect(() => {
+        const delayInputTimeoutId = setTimeout(() => {
+            onSubmit(formData)
+        }, 500);
+        return () => clearTimeout(delayInputTimeoutId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSubmit(formData);

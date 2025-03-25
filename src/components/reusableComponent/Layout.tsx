@@ -30,6 +30,7 @@ const Layout: React.FC = () => {
                 <Outlet />
             </Box>
         </Box>
+
         //</Box>
     );
 };

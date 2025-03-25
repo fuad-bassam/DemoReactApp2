@@ -60,6 +60,7 @@ const ProductCreateUpdatePage: React.FC = () => {
         navigate(`${NavRoutesEnum.Products}`);
     };
     useEffect(() => {
+        debugger
         if (urlId) {
             const fetchProduct = async () => {
                 try {
@@ -133,7 +134,9 @@ const ProductCreateUpdatePage: React.FC = () => {
     return (
         <Grid2 >
 
-
+            <Button onClick={() => handleBack()} variant="outlined" color="primary" style={{ marginRight: 8 }}>
+                Back
+            </Button>
             <StepperForm
                 steps={['Step 1: Product Info', 'Step 2: Product Note']}
                 onSubmit={async () => await handleCreateProduct(newProduct)}
@@ -153,9 +156,7 @@ const ProductCreateUpdatePage: React.FC = () => {
                     />
                 ))}
             </StepperForm>
-            <Button onClick={() => handleBack()} variant="outlined" color="primary" style={{ marginRight: 8 }}>
-                Back
-            </Button>
+
         </Grid2>
     );
 };

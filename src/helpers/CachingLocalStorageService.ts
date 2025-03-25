@@ -44,7 +44,7 @@ export const setOrGetCache = async (key: string, apiCall: () => Promise<any>) =>
 export const removeCachedItemsByPrefix = (prefix: string) => {
     Object.keys(localStorage).forEach((key) => {
         if (key.startsWith(prefix)) {
-            sessionStorage.removeItem(key);
+            localStorage.removeItem(key);
         }
     });
 };

@@ -1,6 +1,5 @@
 import { green, pink } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
-import { CssVarsTheme } from "@mui/material/styles";
 
 // Extend the CssVarsTheme to include the `components` property
 declare module '@mui/material/styles' {
@@ -66,6 +65,8 @@ export const appTheme = createTheme({
           }),
         },
       ],
-    },
+    }, MuiPaper: {
+      styleOverrides: { root: { borderRadius: '1rem' } },
+    }
   },
 });

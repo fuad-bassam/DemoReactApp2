@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Box, Button, TextField, useMediaQuery } from "@mui/material";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
+import { Box, Button, TextField } from "@mui/material";
 import Product from "../../../models/Product/Product";
 import { InitialStateProduct } from "../../store/ProductStoreModule";
 
@@ -16,8 +17,6 @@ const ProductSearchForm: React.FC<ProductSearchFormProps> = ({ onSubmit, onReset
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
-
-
     };
 
     const handleFormSubmit = (e: React.FormEvent) => {
